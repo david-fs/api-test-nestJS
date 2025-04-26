@@ -1,38 +1,15 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📘 API - Gerenciamento de Usuários
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Esta API permite o gerenciamento de usuários com operações de CRUD e ativação/desativação, utilizando dados mockados em memória.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+---
+## Instalação
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
-
+## Compilar e rodar
 ```bash
 # development
 $ npm run start
@@ -40,59 +17,206 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-## Run tests
 
-```bash
-# unit tests
-$ npm run test
+##  Endpoints
 
-# e2e tests
-$ npm run test:e2e
+### 🔹 `GET /users/getAll`
+Retorna todos os usuários cadastrados, sem filtros.
 
-# test coverage
-$ npm run test:cov
+**Resposta:**
+```json
+[
+  {
+    "id": "123",
+    "firstName": "Ana",
+    "lastName": "Silva",
+    "email": "ana@example.com",
+    "isActive": true,
+    "profileId": "01"
+  }
+]
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 🔹 `GET /users/getUsers`
+Filtra usuários por `profileId` e/ou `userId`. Caso não sejam enviados filtros o retorno é a lista completa de dados.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+**Query Params:**
+- `profileId` (opcional): filtra usuários por perfil.
+- `userId` (opcional): busca usuário específico.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+**Exemplos:**
+```
+/users/getUsers?profileId=01
+/users/getUsers?userId=abc123
+/users/getUsers?userId=abc123&profileId=01
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Resposta:**
+```json
+[
+  {
+    "id": "abc123",
+    "firstName": "João",
+    "lastName": "Souza",
+    "email": "joao@example.com",
+    "isActive": true,
+    "profileId": "01"
+  }
+]
+```
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+### 🔹 `POST /users/create`
+Cria um novo usuário.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Request Body:**
+```json
+{
+  "firstName": "João",
+  "lastName": "Souza",
+  "email": "joao@example.com",
+  "isActive": true,
+  "profileId": "02"
+}
+```
 
-## Support
+**Resposta:**
+```json
+{
+  "id": "generated-id",
+  "firstName": "João",
+  "lastName": "Souza",
+  "email": "joao@example.com",
+  "isActive": true,
+  "profileId": "02"
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+### 🔹 `PUT /users/update/:id`
+Atualiza os dados de um usuário existente.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**URL Param:**
+- `id`: ID do usuário a ser atualizado.
 
-## License
+**Request Body:**
+```json
+{
+  "firstName": "João",
+  "lastName": "Atualizado",
+  "email": "joao.atualizado@example.com",
+  "isActive": false,
+  "profileId": "03"
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Resposta:**
+```json
+{
+  "id": "abc123",
+  "firstName": "João",
+  "lastName": "Atualizado",
+  "email": "joao.atualizado@example.com",
+  "isActive": false,
+  "profileId": "03"
+}
+```
+
+---
+
+### 🔹 `PATCH /users/active/:id`
+Alterna o status de ativação (`isActive`) de um usuário.
+
+**URL Param:**
+- `id`: ID do usuário.
+
+**Resposta:**
+```json
+{
+  "id": "abc123",
+  "isActive": false
+}
+```
+
+---
+
+### 🔹 `DELETE /users/delete/:id`
+Remove um usuário do sistema.
+
+**URL Param:**
+- `id`: ID do usuário a ser removido.
+
+**Resposta:**
+```
+200 OK
+Usuário deletado com sucesso.
+```
+
+---
+
+## Observações
+
+- Todos os dados são mantidos apenas em memória (não persistem ao reiniciar).
+- O campo `profileId` deve conter um ID válido já cadastrado (ex: "01", "02", "03").
+- A API retorna status HTTP apropriados para erros, como:
+    - `400 Bad Request`: campos obrigatórios inválidos
+    - `404 Not Found`: usuário não encontrado
+---
+
+##  Possíveis Erros (Exceptions)
+
+A API trata diversos cenários de erro com status HTTP apropriados e mensagens claras.
+
+###  400 - Bad Request
+
+- **Campo `id` vazio:**
+    - Ocorre ao tentar acessar, atualizar, ativar ou deletar um usuário com `id` em branco.
+  ```json
+  {
+    "statusCode": 400,
+    "message": "Id field cannot be empty.",
+    "error": "Bad Request"
+  }
+  ```
+
+- **Campo `profileId` vazio:**
+    - Ao criar ou atualizar um usuário com `profileId` em branco.
+  ```json
+  {
+    "statusCode": 400,
+    "message": "ProfileId field cannot be empty.",
+    "error": "Bad Request"
+  }
+  ```
+
+---
+
+###  404 - Not Found
+
+- **Usuário não encontrado:**
+    - Ao tentar acessar, atualizar, ativar ou deletar um usuário inexistente.
+  ```json
+  {
+    "statusCode": 404,
+    "message": "User with id: abc123 not found",
+    "error": "Not Found"
+  }
+  ```
+
+- **Perfil inexistente:**
+    - Ao criar ou atualizar um usuário com `profileId` que não está cadastrado.
+  ```json
+  {
+    "statusCode": 404,
+    "message": "ProfileId: 99 Not Found",
+    "error": "Not Found"
+  }
+  ```
+
+---
