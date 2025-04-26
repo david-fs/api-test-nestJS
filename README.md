@@ -1,4 +1,4 @@
-# 📘 API - Gerenciamento de Usuários
+# API - Gerenciamento de Usuários
 
 Esta API permite o gerenciamento de usuários com operações de CRUD e ativação/desativação, utilizando dados mockados em memória.
 
