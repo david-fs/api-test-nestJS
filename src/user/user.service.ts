@@ -39,14 +39,12 @@ export class UserService {
 
   getUsers(userId?: string, profileId?: string): User[] {
     let response: User[] = this.userList;
-
     if (userId) {
       response = response.filter((user) => user.id.includes(userId));
     }
     if (profileId) {
       response = response.filter((user) => user.profileId.includes(profileId));
     }
-
     return response;
   }
 

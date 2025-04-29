@@ -25,7 +25,7 @@ export class UserController {
   @Get('/getUsers')
   getUsers(
     @Query('profileId') profileId?: string,
-    @Query('userId') userId?: string,
+    @Query('searchTerm') userId?: string,
   ): User[] {
     return this.userService.getUsers(userId, profileId);
   }
